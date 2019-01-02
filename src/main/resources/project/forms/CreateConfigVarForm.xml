@@ -1,0 +1,31 @@
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateConfigurationVariable</help> 
+	<formElement>
+		<type>entry</type>
+		<label>Configuration:</label>
+		<property>ConfigName</property>
+		<required>1</required>
+		<documentation>The name of the configuration that contains the information to connect with AppHarbor.</documentation>
+	</formElement>
+    <formElement>
+		<type>entry</type>
+		<label>Application Slug:</label>
+		<property>AppSlug</property>
+		<required>1</required>
+		<documentation>The globally unique, URL-friendly version of the application name.</documentation>
+	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>Name:</label>
+		<property>Name</property>
+		<required>1</required>
+		<documentation>The name of the configuration variable.</documentation>
+	</formElement>	
+	<formElement>
+		<type>entry</type>
+		<label>Value:</label>
+		<property>Value</property>
+		<required>1</required>
+		<documentation>The value to assign to the configuration variable.</documentation>
+	</formElement>
+</editor>

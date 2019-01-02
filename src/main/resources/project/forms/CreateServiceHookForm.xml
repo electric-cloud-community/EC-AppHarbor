@@ -1,0 +1,24 @@
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateServiceHook</help> 
+	<formElement>
+		<type>entry</type>
+		<label>Configuration:</label>
+		<property>ConfigName</property>
+		<required>1</required>
+		<documentation>The name of the configuration that contains the information to connect with AppHarbor.</documentation>
+	</formElement>
+    <formElement>
+		<type>entry</type>
+		<label>Application Slug:</label>
+		<property>AppSlug</property>
+		<required>1</required>
+		<documentation>The globally unique, URL-friendly version of the application name.</documentation>
+	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>URL:</label>
+		<property>URL</property>
+		<required>1</required>
+		<documentation>Provide a new URL, e.g. "http://www.example.org".</documentation>
+	</formElement>
+</editor>

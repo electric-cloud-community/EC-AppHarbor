@@ -1,0 +1,69 @@
+# -*-Perl-*-
+
+# appharbor.ntest -
+#
+# Exercise basic components of EC-AppHarbor plugin
+#
+# Copyright (c) 2005-2012 Electric Cloud, Inc.
+# All rights reserved
+
+use strict;
+use warnings;
+use ECTest;
+
+# read in setup and tests that are common to all EC-AppHarbor plugin archives
+# system tests
+
+
+use strict;
+require "$::gTestFileDir/../../EC-AppHarbor/systemtest/appharbor-common.ntest";
+
+
+
+ntest "check-runAppHarbor-present", {}, sub {
+    # Check that the plugin contains required components
+    my $xpath = $::N->getSteps("$::gPlugin_name","BuildsActions");
+    assertOK($xpath,"get steps");
+    assertEq("BuildsActions", $xpath->findvalue("//step[1]/stepName"), "step 1: BuildsActions");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","CreateCollaborator");
+    assertOK($xpath,"get steps");
+    assertEq("CreateCollaborator", $xpath->findvalue("//step[1]/stepName"), "step 1: CreateCollaborator");
+
+    $xpath = $::N->getSteps("$::gPlugin_name","CreateConfigurationVariable");
+    assertOK($xpath,"get steps");
+    assertEq("CreateConfigurationVariable", $xpath->findvalue("//step[1]/stepName"), "step 1: CreateConfigurationVariable");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","CreateServiceHook");
+    assertOK($xpath,"get steps");
+    assertEq("CreateServiceHook", $xpath->findvalue("//step[1]/stepName"), "step 1: CreateServiceHook");
+
+    $xpath = $::N->getSteps("$::gPlugin_name","EditApplication");
+    assertOK($xpath,"get steps");
+    assertEq("EditApplication", $xpath->findvalue("//step[1]/stepName"), "step 1: EditApplication");    
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","EditCollaborator");
+    assertOK($xpath,"get steps");
+    assertEq("EditCollaborator", $xpath->findvalue("//step[1]/stepName"), "step 1: EditCollaborator");
+
+    $xpath = $::N->getSteps("$::gPlugin_name","ListApplications");
+    assertOK($xpath,"get steps");
+    assertEq("ListApplications", $xpath->findvalue("//step[1]/stepName"), "step 1: ListApplications");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","ListCollaborator");
+    assertOK($xpath,"get steps");
+    assertEq("ListCollaborator", $xpath->findvalue("//step[1]/stepName"), "step 1: ListCollaborator");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","ListHostNames");
+    assertOK($xpath,"get steps");
+    assertEq("ListHostNames", $xpath->findvalue("//step[1]/stepName"), "step 1: ListHostNames");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","RemoveApplication");
+    assertOK($xpath,"get steps");
+    assertEq("RemoveApplication", $xpath->findvalue("//step[1]/stepName"), "step 1: RemoveApplication");
+    
+    $xpath = $::N->getSteps("$::gPlugin_name","RemoveCollaborator");
+    assertOK($xpath,"get steps");
+    assertEq("RemoveCollaborator", $xpath->findvalue("//step[1]/stepName"), "step 1: RemoveCollaborator");
+    
+};

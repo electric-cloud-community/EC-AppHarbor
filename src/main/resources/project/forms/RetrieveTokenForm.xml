@@ -1,0 +1,24 @@
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#RetrieveToken</help> 
+	<formElement>
+		<type>entry</type>
+		<label>Configuration Name:</label>
+		<property>ConfigName</property>
+		<required>1</required>
+		<documentation>Provide a name for the configuration to be created.</documentation>
+	</formElement>
+    <formElement>
+		<type>entry</type>
+		<label>User Name:</label>
+		<property>UserName</property>
+		<required>1</required>
+		<documentation>The valid username for the AppHarbor account.</documentation>
+	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>Password:</label>
+		<property>Password</property>
+		<required>1</required>
+		<documentation>The valid password for the AppHarbor account.</documentation>
+	</formElement>
+</editor>

@@ -1,0 +1,33 @@
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#EditCollaborator</help> 
+	<formElement>
+		<type>entry</type>
+		<label>Configuration:</label>
+		<property>ConfigName</property>
+		<required>1</required>
+		<documentation>The name of the configuration that contains the information to connect with AppHarbor.</documentation>
+	</formElement>
+    <formElement>
+		<type>entry</type>
+		<label>Application Slug:</label>
+		<property>AppSlug</property>
+		<required>1</required>
+		<documentation>The globally unique, URL-friendly version of the application name.</documentation>
+	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>Collaborator:</label>
+		<property>Collaborator</property>
+		<required>1</required>
+		<documentation>Specifies the collaborator identifier.</documentation>
+	</formElement>	
+	<formElement>
+        <type>select</type>
+        <label>Role:</label>
+        <property>Role</property>
+        <required>1</required>
+        <documentation>The access level for the collaborator. Accepted values are collaborator or administrator.</documentation>
+        <option><name>Collaborator</name><value>collaborator</value></option>
+        <option><name>Administrator</name><value>administrator</value></option>        
+    </formElement>    
+</editor>

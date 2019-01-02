@@ -1,0 +1,745 @@
+# -*-Perl-*-
+
+# appharbor-RunTest.ntest -
+#
+# ECWebAccess
+#
+# Copyright (c) 2005-2012 Electric Cloud, Inc.
+# All rights reserved
+
+use strict;
+use ECTest;
+use ECSelenium;
+
+ 
+# system tests
+
+
+require "$::gTestFileDir/../../EC-AppHarbor/systemtest/appharbor-common.ntest";
+
+
+use constant {
+    CONFIG      => "AppHarbor",
+};
+
+$::grunAppHarborCreated = 0;
+$::gProjectImported = 0;
+
+#stores the result wheter the result of the procedure is success or error
+my $outcome = "";
+
+sub importProject() {
+    assertOK($::N->import(
+                     { file =>"$::gTestFileDir/import.xml",
+               path  => "/projects/appharbor-test",
+               force => 1
+             } ), "import runAppHarborCommandLine");
+   
+assertOK($::N->getProcedure("appharbor-test", "BuildsActions"),"BuildsActions procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "CreateCollaborator"),"CreateCollaborator procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "CreateConfigurationVariable"),"CreateConfigurationVariable procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "CreateServiceHook"),"CreateServiceHook procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "EditApplication"),"EditApplication procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "EditCollaborator"),"EditCollaborator procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "ListApplications"),"ListApplications procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "ListCollaborator"),"ListCollaborator procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "ListHostNames"),"ListHostNames procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "RemoveCollaborator"),"RemoveCollaborator procedure exists");
+assertOK($::N->getProcedure("appharbor-test", "RemoveApplication"),"RemoveApplication procedure exists");
+
+$::gProjectImported = 1;
+}
+
+sub doSetup() {
+
+    if(! $::gProjectImported) {
+        importProject();
+    }
+
+}
+
+ntest "create configuration", {}, sub {
+    my $xpath = $::N->runProcedure("$::gPlugin_name", 
+        { procedureName => "CreateConfiguration",
+          pollInterval  => '0.2',
+          timeout       => 600,
+          actualParameter => [ 
+            { actualParameterName => 'config', value => CONFIG }, 
+            { actualParameterName => 'token', value => "8c875461-f906-4eba-845d-0fa86e641329" },
+          ],
+        });
+
+    assertOK($xpath, "run create configuration procedure");
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+    assertDef($xpath, "runProcedure finished without a timeout");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+};
+
+
+ntest "BuildsActions", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "BuildsActions",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{HTTP/1.1 200 OK};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='BuildsActions']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[14], "Correct AppHarbor request");
+    
+};
+
+#-------------------------------------------------------------------------------------------------
+ntest "CreateCollaborator", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "CreateCollaborator",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{POST https://appharbor.com/applications/helloworld/collaborators};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='CreateCollaborator']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[4], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "CreateConfigurationVariable", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "CreateConfigurationVariable",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{POST https://appharbor.com/applications/helloworld/configurationvariables};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='CreateConfigurationVariable']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[4], "Correct AppHarbor request");
+    
+};
+
+#-------------------------------------------------------------------------------------------------
+ntest "CreateServiceHook", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "CreateServiceHook",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{POST https://appharbor.com/applications/helloworld/servicehooks};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='CreateServiceHook']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[4], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "EditApplication", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "EditApplication",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{PUT https://appharbor.com/applications/helloworld};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='EditApplication']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[4], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "EditCollaborator", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "EditCollaborator",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{PUT https://appharbor.com/applications/helloworld/collaborators/collaborator};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='EditCollaborator']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[4], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "ListApplications", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "ListApplications",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{Accept: application/json};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='ListApplications']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[5], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "ListCollaborator", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "ListCollaborator",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{Accept: application/json};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='ListCollaborator']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[5], "Correct AppHarbor request");
+    
+};
+
+
+#-------------------------------------------------------------------------------------------------
+ntest "ListHostNames", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "ListHostNames",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{Accept: application/json};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='ListHostNames']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[5], "Correct AppHarbor request");
+    
+};
+
+
+ntest "RemoveCollaborator", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "RemoveCollaborator",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{Accept: application/json};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='RemoveCollaborator']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[5], "Correct AppHarbor request");
+    
+};
+
+
+ntest "RemoveApplication", {}, sub {
+    doSetup();
+    # run test job
+    my $xpath = $::N->runProcedure("appharbor-test", 
+        { procedureName => "RemoveApplication",
+          pollInterval  => '1',
+          timeout => 1200,
+          actualParameter => []
+        });
+    # make sure it finished
+    my $jobId = 0;
+    my $status = "";
+             
+    assertOK($xpath, "runProcedure with errors");
+    if ($xpath) {
+        $jobId  = $xpath->findvalue("//jobId");
+        $status = $xpath->findvalue("//status");
+        $outcome = $xpath->findvalue("//outcome");
+         
+        assertTrue($jobId && $jobId ne "",'valid job id');
+        assertEq('completed',$status,"job $jobId complete");
+         
+        #abort if job did not finish
+        if ($status ne "completed") {
+            assertOK($::N->abortJob($jobId, {force => 1}));
+        }
+    }
+    # get the job details
+    $xpath = $::N->getJobDetails($jobId); 
+    
+    #------------------------------------------------------------------------------------------    
+    # Declare the expected value
+    my $expected = qq{Accept: application/json};
+        
+    # Get the root of log files. use UNC so it works from
+    # command line as well as within a CMD step
+    my $ws = $xpath->findvalue("//workspace[1]/winUNC");
+    
+    if (!isWindows()) {
+        $ws = $xpath->findvalue("//workspace[1]/unix");
+    }
+    
+    return if assertNe($ws, '', "Found a logfile name");
+    
+    my $logFileName = $xpath->findvalue(
+        "//jobStep[stepName='step1']/calledProcedure/jobStep[stepName='RemoveApplication']/logFileName");
+    return if assertNe($logFileName, '', "Found a logfile name");
+    $logFileName = "$ws/$logFileName";
+
+    # Read the log file and verify its contents.
+    my $data = readFile($logFileName);
+    return if assertNe($data, '', "Read data");
+
+    my @data_arr = split("\n",$data);
+    assertEq($expected, $data_arr[5], "Correct AppHarbor request");
+    
+};
+

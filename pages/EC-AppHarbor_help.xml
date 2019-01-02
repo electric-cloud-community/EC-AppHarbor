@@ -1,0 +1,1734 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="generator" content="HTML Tidy for Windows (vers 25 March 2009), see www.w3.org" />
+    <meta content="text/html; charset=us-ascii" http-equiv="content-type" />
+
+    <title>ElectricFlow Plugin for AppHarbor</title>
+    <link rel="stylesheet" href="../../plugins/@PLUGIN_KEY@/pluginhelp.css" type="text/css" media="screen" />
+</head>
+
+<body>
+    <div class="help">
+        <h1>AppHarbor</h1>
+
+        <p>Plugin Version @PLUGIN_VERSION@</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 2px; width: 100%; #5981BD;" noshade="noshade" />
+        <!-- The tool description should answer these kinds of questions:5981BD
+
+                What is the tool itself is used for in the development
+
+                process? Who would use this tool? What is the general use-case or
+
+                problem that this tool solves? Look at the tool's documentation or
+
+                website(s) to get their own descriptions. Look at Wikipedia or other
+
+                outside websites. If there is a Hudson plugin, read their
+
+                documentation for ideas, examples, etc. It's OK to copy word-for-word
+
+                only if appropriate, such as FOSS - but not commercial software.
+
+                -->
+
+        <p>AppHarbor is a cloud platform as a service or PaaS, that supports applications 
+        running on the .NET Framework. AppHarbor allows to deploy and scale .NET applications 
+        without limiting the versioning tool and allows the installation of add-ons in a simple way.
+        Among AppHarbor most common uses are to host blogs, web sites and high traffic web applications.</p>
+        
+        <p>The list of available resources on App Harbor is formed by:</p>
+        <ul>
+            <li>Applications</li>
+            <li>Collaborators</li>
+            <li>Configuration Variables</li>
+            <li>Host Names</li>
+            <li>Service Hooks</li>
+            <li>Builds</li>
+            <li>Tests</li>
+            <li>Errors</li>
+            <li>Users</li>
+        </ul>
+
+        <h2>AppHarbor Links</h2>
+
+        <p>More information can be found at:</p>
+
+        <ul>
+            <li><a href="https://appharbor.com/">AppHarbor Main
+            Page</a></li>
+
+            <li><a href="http://support.appharbor.com/kb/api/oauth-v2">AppHarbor Authentication</a></li>
+        </ul>
+
+        <h2>ElectricFlow Integration to AppHarbor</h2>
+        <!-- The integration description should answer the questions:
+
+                How deep does our integration go? Why should I care? What general
+
+                functionality does the plugin include? What functionality does
+
+                the plugin omit?
+
+                -->
+        <!--p>@PLUGIN_KEY@ plugin calls the AppHarbor web services via HTTP Requests
+                    and passes the user-provided parameters.</p-->
+
+        <p>The @PLUGIN_KEY@ plugin is open, it allows the input of
+        many AppHarbor functions defined in the provided fields of the
+        parameters. Is important to provide all the parameters
+        required for the correct functioning of the AppHarbor
+        plugin.</p>
+
+        <p>ElectricFlow itself provides some advantages like
+        parameters checking, easy functionality selection using
+        only check boxes or radio buttons, hitorical log reports,
+        procedure duration statistics, simple credentials
+        attachment, real time analysis of the log been generated,
+        among others.</p>
+
+        
+        <h1>Plugin Procedures</h1>
+
+        <p>IMPORTANT: For all parameter descriptions below,
+        required parameters are shown in
+        <span class="required">bold italics</span>.</p>
+        <hr style="margin-left: -10px; margin-top: 10px; height: 1px; width: 100%; #5981BD;" noshade="noshade" />
+
+        <div id="ListApplications">
+            <a name="ListApplications" id="ListApplications"></a> 
+
+            <h3>List Applications</h3>
+
+            <p>This procedure allows to list all applications associated with the
+            authorized AppHarbor account, or just one specific application.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the
+                        options are: List All and Get application detail.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Applications parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListApplications.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="CreateApplication">
+            <a name="CreateApplication" id="CreateApplication"></a> 
+
+            <h3>Create Application</h3>
+
+            <p>This procedure allows to create an AppHarbor application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Name</td>
+
+                        <td>Specifies the name for the app to create.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Region</td>
+
+                        <td>Select the region identifier, the options are: amazon-web-services::us-east-1 or amazon-web-services::eu-west-1.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Create Application parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateApplication.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="EditApplication">
+            <a name="EditApplication" id="EditApplication"></a> 
+
+            <h3>Edit Application</h3>
+
+            <p>This procedure allows to edit an existing AppHarbor application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Name</td>
+
+                        <td>Specifies the new name for the app.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Edit Application parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/EditApplication.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="RemoveApplication">
+            <a name="RemoveApplication" id="RemoveApplication"></a> 
+
+            <h3>Remove Application</h3>
+
+            <p>This procedure allows to remove an existing AppHarbor application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Remove Application parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveApplication.png" alt="screenshot" />
+        </div>
+        
+        
+        <div id="ListErrors">
+            <a name="ListErrors" id="ListErrors"></a> 
+
+            <h3>List Errors</h3>
+
+            <p>This procedure allows to retrieve information about the unhandled exception logs for an application.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the options are: List Error Logs and Get Error Detail. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Error</td>
+
+                        <td>The Error identifier.</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Errors parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListErrors.png" alt="screenshot" />
+        </div>
+        
+        
+        
+        <div id="ListCollaborator">
+            <a name="ListCollaborator" id="ListCollaborator"></a> 
+
+            <h3>List Collaborator</h3>
+
+            <p>Used to retrieve information about the collaborators for an application.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the
+                        options are: List Collaborators and Get Collaborator Detail. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Collaborator</td>
+
+                        <td>Specifies the collaborator identifier.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Collaborator parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListCollaborator.png" alt="screenshot" />
+        </div>
+        
+        
+        
+        <div id="CreateCollaborator">
+            <a name="CreateCollaborator" id="CreateCollaborator"></a> 
+
+            <h3>Create Collaborator</h3>
+
+            <p>This procedure allows to create a collaborator for an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Email</td>
+
+                        <td>The email address of the collaborator to add. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Role</td>
+
+                        <td>The access level for the collaborator. Accepted values are collaborator or administrator. (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Create Collaborator parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateCollaborator.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="EditCollaborator">
+            <a name="EditCollaborator" id="EditCollaborator"></a> 
+
+            <h3>Edit Collaborator</h3>
+
+            <p>Allows to edit an existing collaborator for an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Collaborator</td>
+
+                        <td>Specifies the collaborator identifier. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Role</td>
+
+                        <td>The access level for the collaborator. Accepted values are collaborator or administrator. (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Edit Collaborator parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/EditCollaborator.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="RemoveCollaborator">
+            <a name="RemoveCollaborator" id="RemoveCollaborator"></a> 
+
+            <h3>Remove Collaborator</h3>
+
+            <p>Allows to remove an existing collaborator from an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Collaborator</td>
+
+                        <td>Specifies the collaborator identifier. (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Remove Collaborator parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveCollaborator.png" alt="screenshot" />
+        </div>
+        
+        
+        <div id="ListConfiguration">
+            <a name="ListConfiguration" id="ListConfiguration"></a> 
+
+            <h3>List Configuration</h3>
+
+            <p>Allows the developer to retrieve information about the user-created environment 
+            settings for an application. The options are: List Configuration Variables and Get 
+            Configuration Variable Detail</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the
+                        options are: List Configuration Variables and Get Configuration Variable Detail. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Configuration Variable</td>
+
+                        <td>Specifies the configuration variable identifier.</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Configuration parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListConfiguration.png" alt="screenshot" />
+        </div>
+        
+        
+        
+        <div id="CreateConfigurationVariable">
+            <a name="CreateConfigurationVariable" id="CreateConfigurationVariable"></a> 
+
+            <h3>Create Configuration Variable</h3>
+
+            <p>Allows the user to create a configuration variable for an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Name</td>
+
+                        <td>The name of the configuration variable.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Value</td>
+
+                        <td>The value to assign to the configuration variable.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Create Configuration Variable parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateConfigurationVariable.png" alt="screenshot" />
+        </div>
+       
+        
+        <div id="EditConfigurationVariable">
+            <a name="EditConfigurationVariable" id="EditConfigurationVariable"></a> 
+
+            <h3>Edit Configuration Variable</h3>
+
+            <p>Allows the user to edit a configuration variable for an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+          <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Configuration Variable</td>
+
+                        <td>The configuration variable identifier.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Name</td>
+
+                        <td>The name of the configuration variable.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Value</td>
+
+                        <td>The value to assign to the configuration variable.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Edit Configuration Variable parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/EditConfigurationVariable.png" alt="screenshot" />             
+        </div>
+        
+        
+        <div id="RemoveConfigurationVariable">
+            <a name="RemoveConfigurationVariable" id="RemoveConfigurationVariable"></a> 
+
+            <h3>Remove Configuration Variable</h3>
+
+            <p>This procedure is used to remove a configuration variable from an application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.(Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Configuration Variable</td>
+
+                        <td>The configuration variable identifier.(Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Remove Configuration Variable parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveConfigurationVariable.png" alt="screenshot" />
+        </div>
+        
+        
+        <div id="ListHostNames">
+            <a name="ListHostNames" id="ListHostNames"></a> 
+
+            <h3>List Host Names</h3>
+
+            <p>Allow the user to create, view and modify the custom hostnames and domains associated with an application.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that contains the information to connect with AppHarbor. (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the options are: List Hostnames and Get Hostname Detail. (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Host Name</td>
+
+                        <td>The Hostname identifier.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Host Names parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListHostNames.png" alt="screenshot" />
+        </div>
+        
+                
+        <div id="CreateHostName">
+            <a name="CreateHostName" id="CreateHostName"></a> 
+
+            <h3>Create Host Name</h3>
+
+            <p>Allow the user to create a custom host name and associate it with an application. IMPORTANT: Adding hostnames to an application incurs a cost.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that contains the information to connect with AppHarbor. (Required)</td>
+                    </tr>
+                    
+                   <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Hostname</td>
+
+                        <td>Specifies the new Hostname, e.g. "example.org". (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Create Host Name parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateHostName.png" alt="screenshot" />
+        </div>
+        
+        
+        <div id="DeleteHostName">
+            <a name="DeleteHostName" id="DeleteHostName"></a> 
+
+            <h3>Delete Host Name</h3>
+
+            <p>Allow the user to delete a host name from a given application.</p>
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that contains the information to connect with AppHarbor. (Required)</td>
+                    </tr>
+                    
+                   <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Hostname</td>
+
+                        <td>Specifies hostname to remove. (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Delete Host Name parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/DeleteHostName.png" alt="screenshot" />
+        </div>
+        
+        
+        
+        
+        <div id="ListServiceHooks">
+            <a name="ListServiceHooks" id="ListServiceHooks"></a> 
+
+            <h3>List Service Hooks</h3>
+
+            <p>This procedure is used to view the service hooks associated with an AppHarbor application.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the
+                        options are: List Service Hooks and Get Service Hook Detail. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Service Hook</td>
+
+                        <td>Specifies the Service Hook identifier.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>List Service Hooks parameters form for the "scale"
+            action:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListServiceHooks.png" alt="screenshot" />
+        </div>
+        
+        
+
+        <div id="CreateServiceHook">
+            <a name="CreateServiceHook" id="CreateServiceHook"></a> 
+
+            <h3>Create Service Hook</h3>
+
+            <p>Allows the user to create service hooks and associate them with an AppHarbor application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.
+                        (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">URL</td>
+
+                        <td>Provide a new URL, e.g. "http://www.example.org".
+                        (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Create Service Hook parameters form for the "scale"
+            action:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateServiceHook.png" alt="screenshot" />
+        </div>
+        
+        
+        <div id="RemoveServiceHook">
+            <a name="RemoveServiceHook" id="RemoveServiceHook"></a> 
+
+            <h3>Remove Service Hook</h3>
+
+            <p>This procedure is used to remove service hooks associated with an AppHarbor application.</p>
+
+            <p>The "required" specified fields cannot
+            be omited.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+           <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name.
+                        (Required)</td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="required">Service Hook</td>
+
+                        <td>Specifies the Service Hook identifier. (Required)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Remove Service Hook parameters form:</p>
+            <img src="../../plugins/@PLUGIN_KEY@/images/RemoveServiceHook.png" alt="screenshot" />
+        </div>
+        
+        
+
+        <div id="BuildsActions">
+            <a name="BuildsActions" id="BuildsActions"></a> 
+
+            <h3>Builds Actions</h3>
+
+            <p>Allow the user to retrieve information about the build history for an application. 
+            This procedure will permit the viewing the test history associated with the authorized 
+            AppHarbor account. The options provided are: List Build History, Get Build Detail, List
+            Tests and Get Test Detail.</p>
+
+            <p>Some of the parameters are not required for all
+            cases, however, the "required" specified fields cannot
+            be omited. The parameters that are not required for all 
+            cases are only displayed depending the value of Action parameter.</p>
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Action</td>
+
+                        <td>Select the Action to perform, the
+                        options are: List Build History, Get Build Detail, List Tests and Get Test Detail.
+                        (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td>Build</td>
+
+                        <td>Specifies the build identifier.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Test</td>
+
+                        <td>Specifies the test identifier.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Builds Actions parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/BuildsActions.png" alt="screenshot" />
+        </div>
+        
+        
+
+        <div id="Deploy">
+            <a name="Deploy" id="Deploy"></a> 
+
+            <h3>Deploy</h3>
+
+            <p>Allow the user to deploy an application. The editor for this subprocedure will have the following parameters:</p>
+            
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration</td>
+
+                        <td>The name of the configuration that
+                        contains the information to connect with
+                        AppHarbor.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Application Slug</td>
+
+                        <td>The globally unique, URL-friendly version of the application name. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Build</td>
+
+                        <td>Specifies the build identifier. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Deploy parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/Deploy.png" alt="screenshot" />
+        </div>
+        
+         <div id="RetrieveToken">
+            <a name="RetrieveToken" id="RetrieveToken"></a> 
+
+            <h3>Retrieve Token</h3>
+
+            <p>Allows the user to create a Configuration with the valid token, by providing the username and password. IMPORTANT: This procedure can be used only on Windows.</p>
+            
+            <!-- If the plugin has separate configurations then include this section,
+
+                        otherwise omit this whole section. We don't need to have a configuration
+
+                        section that just says "There is no configuration for this plugin."
+
+                        -->
+
+            <table class="grid">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="required">Configuration Name</td>
+
+                        <td>Provide a name for the configuration to be created.(Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">User Name</td>
+
+                        <td>The valid username for the AppHarbor account. (Required)</td>
+                    </tr>
+
+                    <tr>
+                        <td class="required">Password</td>
+
+                        <td>The valid password for the AppHarbor account. (Required)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- For all parameters, the parameter name should be *exactly* the same as it appears in the
+
+                            Parameter Panel, and the first sentence(s) of the description should be
+
+                            the same as the tooltip (if there is one). After that, the parameter
+
+                            description can go into greater detail about the parameter including
+
+                            valid value ranges and examples.
+
+                            -->
+
+            <p>Retrieve Token parameters
+            form:</p><img src="../../plugins/@PLUGIN_KEY@/images/RetrieveToken.png" alt="screenshot" />
+        </div>
+
+        <h1>Use Cases and Examples</h1>
+        <!-- This section is for examples and use cases, including screenshots of the new Parameter Panel with example values filled in.
+
+                Unfortunately, I can't tell you what exactly to put here, but it's OK to put what seems like too much! Include both parameter
+
+                values and output where appropriate. Use a separate 'h2' header for each example. Under the h2 header try to stay with the style
+
+                outline used above where possible.
+
+                -->
+
+        <h2>Example: Create Application, List Collaborator, Create Configuration Variable, List Host Names and Remove Application.</h2>
+
+        <p>The first step is to create a configuration with your
+        AppHarbor <span class="required">API Key</span>, wich is
+        available by following the steps in the  
+        <a href="http://support.appharbor.com/kb/api/oauth-v2">OAuth v2</a>
+        page, Authorization Workflow.</p><img src="../../plugins/@PLUGIN_KEY@/images/Config.png" alt="screenshot" /> 
+
+        <p>With the configuration ready, it is possible to use any
+        of the procedures provided. For this example we will start
+        by creating a new AppHarbor App, in order to do this it is
+        necesary to access the Create Application procedure and
+        provide the requested
+        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateApp.png" alt="screenshot" />
+
+        <p>Once the parameters are set, now you are able to execute
+        the step. The result is
+        succesful:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateApp2.png" alt="screenshot" />
+        
+
+        <p>To continue with the example, it is possible to list
+        Collaborators of an Application by entering the List Collaborator
+        procedure and provide the required parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListCollaborator1.png" alt="screenshot" /> 
+
+        <p>Once the parameters are set, now you are able to execute
+        the step. The result is
+        succesful:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListCollaborator2.png" alt="screenshot" /> 
+
+        <p>For this case it is also possible to check the response
+        from AppHarbor by entering the
+        log:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListCollaborator3.png" alt="screenshot" /> 
+
+        <p>An important funcitionality used in the example includes the configuration variables operations, in this case
+        a new configuration variable will be created for the application created earlier. It is necesary to
+        access the Create Configuration Variable procedure and provide the requested parameters:</p>
+        <img src="../../plugins/@PLUGIN_KEY@/images/CreateConfigVar.png" alt="screenshot" />
+
+        <p>Once the parameters are set, now you are able to execute
+        the step. The result is
+        succesful:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateConfigVar1.png" alt="screenshot" /> 
+
+        <p>It is also possible to check the response body from
+        AppHarbor by entering the
+        log:</p><img src="../../plugins/@PLUGIN_KEY@/images/CreateConfigVar2.png" alt="screenshot" /> 
+
+        <p>To continue with the example, now it is time to review the Host Names for the application, in order to make this happen, the user must access the List Host Names procedure
+        and provide the required parameters:</p>
+        <img src="../../plugins/@PLUGIN_KEY@/images/ListHostNames1.png" alt="screenshot" /> 
+        
+        <p>Once the parameters are set, now you are able to execute
+        the step. The result is
+        succesful:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListHostNames2.png" alt="screenshot" /> 
+        
+        <p>It is also possible to check the response body from
+        AppHarbor by entering the
+        log:</p><img src="../../plugins/@PLUGIN_KEY@/images/ListHostNames3.png" alt="screenshot" /> 
+        
+        <p>As final action for thi example the application will be
+        destroyed using the procedure Remove Application. It is
+        necesary to provide the following
+        parameters:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveApp1.png" alt="screenshot" /> 
+
+        <p>Once the parameters are set, now you are able to execute
+        the step. The result is
+        succesful:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveApp2.png" alt="screenshot" /> 
+
+        <p>It is also possible to check the response body from
+        AppHarbor by entering the log, in this case the action was
+        destroy, and for that the response body is
+        empty:</p><img src="../../plugins/@PLUGIN_KEY@/images/RemoveApp3.png" alt="screenshot" /> 
+
+        <h1>Release Notes</h1>
+	<h2>@PLUGIN_KEY@ 1.0.1</h2>
+    <ul>
+        <li>Fixed issue with configurations being cached for IE.</li>
+    </ul>
+
+        <h2>@PLUGIN_KEY@-1.0.0</h2>
+
+        <ul>
+            <li>Procedures: List Applications, Create Application, Edit Application, Remove Application, List Errors, List Collaborator, Create Collaborator, Edit Collaborator, Remove Collaborator, List Configuration,  Create Configuration Variable, Edit Configuration Variable, Remove Configuration Variable, List Host Names, Create Host Name, Delete Host Name, List Service Hooks, Create Service Hook, Remove Service Hook, Builds Actions, Retrieve Token and Deploy.</li>
+
+            <li>Implemented dynamic GWT parameter panels for some procedures and XML parameter panels for the remaining.</li>
+
+            <li>Created help page, including detailed example.</li>
+
+            <li>Postp implementation.</li>
+        </ul>
+    </div>
+</body>
+</html>

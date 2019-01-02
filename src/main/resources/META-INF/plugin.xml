@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <key>@PLUGIN_KEY@</key>
+    <version>@PLUGIN_VERSION@</version>
+    <label>@PLUGIN_KEY@</label>
+    <description>Integrates AppHarbor's cloud platform as a service into Electric Commander</description>
+    <author>Electric Cloud</author>
+    <authorUrl>http://www.electric-cloud.com/support</authorUrl>
+    <category>Deployment</category>
+    <configure>configurations.xml</configure>
+    <commander-version min="3.6"/>
+    <help>EC-AppHarbor_help.xml</help>    
+    <components>
+        <component name="ConfigurationManagement">
+            <javascript>war/ecplugins.EC_AppHarbor.ConfigurationManagement/ecplugins.EC_AppHarbor.ConfigurationManagement.nocache.js</javascript>
+        </component>
+        <component name="ListConfiguration">
+            <javascript>war/ecplugins.EC_AppHarbor.ListConfiguration/ecplugins.EC_AppHarbor.ListConfiguration.nocache.js</javascript>
+        </component>
+        <component name="ListApplicationsParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListApplicationsParameterPanel/ecplugins.EC_AppHarbor.ListApplicationsParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="ListErrorsParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListErrorsParameterPanel/ecplugins.EC_AppHarbor.ListErrorsParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="ListCollaboratorParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListCollaboratorParameterPanel/ecplugins.EC_AppHarbor.ListCollaboratorParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="ListConfigurationParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListConfigurationParameterPanel/ecplugins.EC_AppHarbor.ListConfigurationParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="ListHostNamesParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListHostNamesParameterPanel/ecplugins.EC_AppHarbor.ListHostNamesParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="ListServiceHooksParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.ListServiceHooksParameterPanel/ecplugins.EC_AppHarbor.ListServiceHooksParameterPanel.nocache.js
+            </javascript>
+        </component>
+        <component name="BuildsActionsParameterPanel">
+            <javascript>
+                war/ecplugins.EC_AppHarbor.BuildsActionsParameterPanel/ecplugins.EC_AppHarbor.BuildsActionsParameterPanel.nocache.js
+            </javascript>
+        </component>        
+    </components>
+    <customTypes>
+        <customType name="ListApplications">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListApplicationsParameterPanel/ecplugins.EC_AppHarbor.ListApplicationsParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListApplications
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="ListErrors">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListErrorsParameterPanel/ecplugins.EC_AppHarbor.ListErrorsParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListErrors
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="ListCollaborator">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListCollaboratorParameterPanel/ecplugins.EC_AppHarbor.ListCollaboratorParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListCollaborator
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="ListConfiguration">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListConfigurationParameterPanel/ecplugins.EC_AppHarbor.ListConfigurationParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListConfiguration
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="ListHostNames">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListHostNamesParameterPanel/ecplugins.EC_AppHarbor.ListHostNamesParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListHostNames
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="ListServiceHooks">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.ListServiceHooksParameterPanel/ecplugins.EC_AppHarbor.ListServiceHooksParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#ListServiceHooks
+                </help>
+            </parameterPanel>
+        </customType>
+        <customType name="BuildsActions">
+            <parameterPanel>
+                <javascript>
+                    war/ecplugins.EC_AppHarbor.BuildsActionsParameterPanel/ecplugins.EC_AppHarbor.BuildsActionsParameterPanel.nocache.js
+                </javascript>
+                <help>/commander/pages/@PLUGIN_KEY@-@PLUGIN_VERSION@/EC-AppHarbor_help?s=Administration&amp;ss=Plugins#BuildsActions
+                </help>
+            </parameterPanel>
+        </customType>           
+    </customTypes>
+</plugin>

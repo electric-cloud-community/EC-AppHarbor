@@ -1,0 +1,26 @@
+<editor>
+	<help>/commander/pages/@PLUGIN_NAME@/@PLUGIN_KEY@_help?s=Administration&amp;ss=Plugins#CreateApplication</help> 
+	<formElement>
+		<type>entry</type>
+		<label>Configuration:</label>
+		<property>ConfigName</property>
+		<required>1</required>
+		<documentation>The name of the configuration that contains the information to connect with AppHarbor.</documentation>
+	</formElement>
+	<formElement>
+		<type>entry</type>
+		<label>Name:</label>
+		<property>Name</property>
+		<required>1</required>
+		<documentation>Specifies the name for the app to create.</documentation>
+	</formElement>	
+	<formElement>
+        <type>select</type>
+        <label>Region:</label>
+        <property>Region</property>
+        <required>1</required>
+        <documentation>Select the region identifier, the options are: amazon-web-services::us-east-1 or amazon-web-services::eu-west-1.</documentation>
+        <option><name>amazon-web-services::us-east-1</name><value>us-east-1</value></option>
+        <option><name>amazon-web-services::eu-west-1</name><value>eu-west-1</value></option>        
+    </formElement>    
+</editor>
